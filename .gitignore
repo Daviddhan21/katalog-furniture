@@ -1,0 +1,15 @@
+# Abaikan folder dependency
+node_modules/
+
+# Abaikan file environment/rahasia
+.env
+
+# Abaikan file database lokal (Opsional)
+database
+database.db
+
+# File log & cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store

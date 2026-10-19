@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detail Produk - RS Furniture</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .product-image {
+            transition: transform 0.5s ease;
+        }
+
+        .image-wrapper:hover .product-image {
+            transform: scale(1.03);
+        }
+
+        .wa-button {
+            transition: all 0.25s ease;
+        }
+
+        .wa-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .skeleton {
+            animation: skeleton 1.5s infinite;
+        }
+
+        @keyframes skeleton {
+            0% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.6;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-stone-100 font-sans text-gray-800 min-h-screen">
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+    <nav class="bg-white border-b border-stone-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="h-16 flex items-center justify-between">
+
+                <a href="/"
+                   class="flex items-center gap-2 text-amber-800 font-semibold text-sm hover:text-amber-950 transition">
+
+                    <span class="text-xl">←</span>
+
+                    <span class="hidden sm:inline">
+                        Kembali ke Katalog
+                    </span>
+
+                    <span class="sm:hidden">
+                        Katalog
+                    </span>
+
+                </a>
+
+                <a href="/"
+                   class="text-lg sm:text-xl font-black tracking-wide text-amber-950">
+                    RS FURNITURE
+                </a>
+
+                <div class="w-20 sm:w-32"></div>
+
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+
+        <!-- Breadcrumb -->
+        <div id="breadcrumb"
+             class="text-xs sm:text-sm text-gray-500 mb-5">
+            Katalog / Detail Produk
+        </div>
+
+
+        <!-- =========================
+             LOADING
+        ========================== -->
+        <div id="loadingState"
+             class="bg-white rounded-2xl border border-stone-200 shadow-sm p-5 sm:p-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <div class="skeleton bg-stone-200 rounded-2xl h-80 sm:h-[450px]"></div>
+
+                <div class="space-y-5">
+
+                    <div class="skeleton bg-stone-200 h-6 w-32 rounded-full"></div>
+
+                    <div class="skeleton bg-stone-200 h-9 w-3/4 rounded"></div>
+
+                    <div class="skeleton bg-stone-200 h-8 w-1/2 rounded"></div>
+
+                    <div class="border-t border-b border-stone-200 py-5 space-y-4">
+
+                        <div class="skeleton bg-stone-200 h-5 w-full rounded"></div>
+
+                        <div class="skeleton bg-stone-200 h-5 w-full rounded"></div>
+
+                        <div class="skeleton bg-stone-200 h-5 w-5/6 rounded"></div>
+
+                    </div>
+
+                    <div class="skeleton bg-stone-200 h-24 w-full rounded"></div>
+
+                    <div class="skeleton bg-stone-200 h-14 w-full rounded-xl"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             ERROR STATE
+        ========================== -->
+        <div id="errorState"
+             class="hidden bg-white rounded-2xl border border-red-200 shadow-sm p-8 text-center">
+
+            <div class="text-5xl mb-4">
+                😕
+            </div>
+
+            <h2 class="text-xl font-bold text-gray-900">
+                Produk tidak ditemukan
+            </h2>
+
+            <p class="text-gray-500 text-sm mt-2">
+                Produk yang kamu cari mungkin sudah tidak tersedia
+                atau link produk tidak valid.
+            </p>
+
+            <a href="/"
+               class="inline-block mt-6 px-6 py-3 bg-amber-800 text-white font-semibold rounded-xl hover:bg-amber-900 transition">
+                Kembali ke Katalog
+            </a>
+
+        </div>
+
+
+        <!-- =========================
+             PRODUCT DETAIL
+        ========================== -->
+        <section id="productDetail"
+                 class="hidden">
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer class="border-t border-stone-200 bg-white mt-10">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500">
+
+                <p>
+                    © 2026 RS Furniture
+                </p>
+
+                <p>
+                    Katalog Digital Furniture
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        // ==========================================
+        // CONFIGURATION
+        // ==========================================
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const productId = urlParams.get('id');
+
+        const NOMOR_WA_PENJUAL = '6281215618998';
+
+
+        // ==========================================
+        // ELEMENTS
+        // ==========================================
+
+        const loadingState = document.getElementById('loadingState');
+
+        const errorState = document.getElementById('errorState');
+
+        const productDetail = document.getElementById('productDetail');
+
+        const breadcrumb = document.getElementById('breadcrumb');
+
+
+        // ==========================================
+        // FORMAT RUPIAH
+        // ==========================================
+
+        function formatRupiah(value) {
+
+            const number = Number(value) || 0;
+
+            return number.toLocaleString('id-ID');
+
+        }
+
+
+        // ==========================================
+        // ESCAPE HTML
+        // ==========================================
+
+        function escapeHtml(value) {
+
+            if (value === null || value === undefined) {
+                return '';
+            }
+
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+
+        }
+
+
+        // ==========================================
+        // SHOW ERROR
+        // ==========================================
+
+        function showError() {
+
+            loadingState.classList.add('hidden');
+
+            productDetail.classList.add('hidden');
+
+            errorState.classList.remove('hidden');
+
+        }
+
+
+        // ==========================================
+        // LOAD PRODUCT DETAIL
+        // ==========================================
+
+        async function loadDetail() {
+
+            // Tidak ada ID produk
+            if (!productId) {
+
+                showError();
+
+                return;
+
+            }
+
+
+            try {
+
+                const response = await fetch(`/api/produk/${encodeURIComponent(productId)}`);
+
+
+                // API error
+                if (!response.ok) {
+
+                    throw new Error('Produk tidak ditemukan');
+
+                }
+
+
+                const item = await response.json();
+
+
+                // Validasi data
+                if (!item || !item.id) {
+
+                    throw new Error('Data produk tidak valid');
+
+                }
+
+
+                renderProduct(item);
+
+
+            } catch (error) {
+
+                console.error('Gagal mengambil detail produk:', error);
+
+                showError();
+
+            }
+
+        }
+
+
+        // ==========================================
+        // RENDER PRODUCT
+        // ==========================================
+
+        function renderProduct(item) {
+
+            loadingState.classList.add('hidden');
+
+            errorState.classList.add('hidden');
+
+            productDetail.classList.remove('hidden');
+
+            productDetail.classList.add('fade-in');
+
+
+            const nama = escapeHtml(item.nama);
+
+            const kategori = escapeHtml(item.kategori);
+
+            const bahan = escapeHtml(item.bahan);
+
+            const deskripsi = escapeHtml(
+                item.deskripsi || 'Tidak ada deskripsi produk.'
+            );
+
+
+            const panjang = escapeHtml(item.panjang || '-');
+
+            const lebar = escapeHtml(item.lebar || '-');
+
+            const tinggi = escapeHtml(item.tinggi || '-');
+
+
+            const foto = escapeHtml(
+                item.foto_url ||
+                'https://placehold.co/800x600/e7e5e4/78350f?text=RS+Furniture'
+            );
+
+
+            const harga = formatRupiah(item.harga);
+
+
+            // WhatsApp message
+            const pesan = encodeURIComponent(
+                `Halo RS Furniture 👋
+
+Saya tertarik dengan produk:
+
+Nama Produk: ${item.nama}
+Kategori: ${item.kategori}
+Harga: Rp ${harga}
+
+Apakah produk ini masih tersedia?
+
+Terima kasih.`
+            );
+
+
+            const whatsappUrl =
+                `https://wa.me/${NOMOR_WA_PENJUAL}?text=${pesan}`;
+
+
+            // Breadcrumb
+            breadcrumb.innerHTML = `
+                <a href="/" class="hover:text-amber-800 transition">
+                    Katalog
+                </a>
+
+                <span class="mx-2">/</span>
+
+                <span class="text-gray-700">
+                    ${nama}
+                </span>
+            `;
+
+
+            // Main content
+            productDetail.innerHTML = `
+
+                <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+
+
+                        <!-- =========================
+                             PRODUCT IMAGE
+                        ========================== -->
+
+                        <div class="p-4 sm:p-6 lg:p-8">
+
+                            <div class="image-wrapper relative overflow-hidden rounded-2xl bg-stone-100">
+
+                                <img
+                                    src="${foto}"
+                                    alt="${nama}"
+                                    class="product-image w-full h-[300px] sm:h-[420px] lg:h-[500px] object-cover"
+                                    onerror="this.onerror=null;this.src='https://placehold.co/800x600/e7e5e4/78350f?text=RS+Furniture';"
+                                >
+
+                                <!-- Category -->
+                                <div class="absolute top-4 left-4">
+
+                                    <span class="inline-flex items-center px-3 py-1.5 bg-white/95 backdrop-blur text-amber-800 text-xs font-bold rounded-full shadow-sm">
+
+                                        ${kategori}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Image note -->
+
+                            <div class="mt-4 flex items-center gap-2 text-xs text-gray-500">
+
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+
+                                Produk resmi RS Furniture
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =========================
+                             PRODUCT INFORMATION
+                        ========================== -->
+
+                        <div class="p-5 sm:p-6 lg:p-10 flex flex-col">
+
+
+                            <!-- Badges -->
+
+                            <div class="flex flex-wrap gap-2">
+
+                                <span class="inline-flex items-center px-3 py-1.5 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">
+
+                                    ${kategori}
+
+                                </span>
+
+                                <span class="inline-flex items-center px-3 py-1.5 bg-green-100 text-green-800 text-xs font-bold rounded-full">
+
+                                    ✓ Garansi 1 Tahun
+
+                                </span>
+
+                                <span class="inline-flex items-center px-3 py-1.5 bg-stone-100 text-stone-700 text-xs font-bold rounded-full">
+
+                                    Custom Warna
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- Product name -->
+
+                            <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mt-5 leading-tight">
+
+                                ${nama}
+
+                            </h1>
+
+
+                            <!-- Price -->
+
+                            <div class="mt-4">
+
+                                <p class="text-sm text-gray-500">
+                                    Harga mulai dari
+                                </p>
+
+                                <p class="text-3xl font-black text-amber-900 mt-1">
+
+                                    Rp ${harga}
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- Product specification -->
+
+                            <div class="mt-7 border-y border-stone-200 py-6">
+
+                                <h2 class="font-bold text-gray-900 mb-4">
+                                    Spesifikasi Produk
+                                </h2>
+
+
+                                <div class="space-y-4 text-sm">
+
+
+                                    <!-- Material -->
+
+                                    <div class="flex justify-between gap-5">
+
+                                        <span class="text-gray-500">
+                                            Material / Bahan
+                                        </span>
+
+                                        <span class="font-semibold text-gray-900 text-right">
+                                            ${bahan || '-'}
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- Dimension -->
+
+                                    <div class="flex justify-between gap-5">
+
+                                        <span class="text-gray-500">
+                                            Dimensi
+                                        </span>
+
+                                        <span class="font-semibold text-gray-900 text-right">
+
+                                            ${panjang} × ${lebar} × ${tinggi} cm
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- Warranty -->
+
+                                    <div class="flex justify-between gap-5">
+
+                                        <span class="text-gray-500">
+                                            Garansi
+                                        </span>
+
+                                        <span class="font-semibold text-green-700 text-right">
+                                            1 Tahun
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- Custom -->
+
+                                    <div class="flex justify-between gap-5">
+
+                                        <span class="text-gray-500">
+                                            Custom Warna
+                                        </span>
+
+                                        <span class="font-semibold text-amber-800 text-right">
+                                            Gratis
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Description -->
+
+                            <div class="mt-6">
+
+                                <h2 class="font-bold text-gray-900 mb-2">
+                                    Deskripsi
+                                </h2>
+
+                                <p class="text-gray-600 text-sm leading-7">
+
+                                    ${deskripsi}
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- WhatsApp CTA -->
+
+                            <div class="mt-auto pt-7">
+
+
+                                <a
+                                    href="${whatsappUrl}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="wa-button w-full flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-5 rounded-xl shadow-lg"
+                                >
+
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-6 h-6"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                    >
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                                        <path d="M20.52 3.449C18.24 1.164 15.207-.001 12.011 0 5.409 0 .032 5.376.03 11.98c0 2.11.551 4.17 1.598 5.986L0 24l6.178-1.62a11.93 11.93 0 0 0 5.83 1.483h.005c6.6 0 11.978-5.376 11.98-11.98a11.9 11.9 0 0 0-3.473-8.434zM12.013 21.785h-.004a9.9 9.9 0 0 1-5.05-1.38l-.362-.215-3.667.961.979-3.577-.235-.367a9.92 9.92 0 0 1-1.52-5.227C2.156 6.49 6.571 2.076 12.016 2.076a9.84 9.84 0 0 1 7.01 2.908 9.84 9.84 0 0 1 2.9 7.014c-.002 5.444-4.419 9.87-9.913 9.87z"/>
+                                    </svg>
+
+                                    <span>
+                                        Pesan via WhatsApp
+                                    </span>
+
+                                </a>
+
+
+                                <p class="text-center text-xs text-gray-500 mt-3">
+
+                                    Hubungi kami untuk cek stok,
+                                    harga terbaru, dan pemesanan.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     INFORMATION CARDS
+                ========================== -->
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+
+
+                    <div class="bg-white border border-stone-200 rounded-xl p-5">
+
+                        <div class="text-2xl mb-3">
+                            🛡️
+                        </div>
+
+                        <h3 class="font-bold text-gray-900">
+                            Garansi 1 Tahun
+                        </h3>
+
+                        <p class="text-xs text-gray-500 mt-1 leading-5">
+                            Perlindungan garansi untuk memberikan
+                            rasa aman setelah pembelian.
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-white border border-stone-200 rounded-xl p-5">
+
+                        <div class="text-2xl mb-3">
+                            🎨
+                        </div>
+
+                        <h3 class="font-bold text-gray-900">
+                            Free Custom Warna
+                        </h3>
+
+                        <p class="text-xs text-gray-500 mt-1 leading-5">
+                            Pilih warna sesuai kebutuhan interior
+                            tanpa biaya tambahan.
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-white border border-stone-200 rounded-xl p-5">
+
+                        <div class="text-2xl mb-3">
+                            💬
+                        </div>
+
+                        <h3 class="font-bold text-gray-900">
+                            Konsultasi Langsung
+                        </h3>
+
+                        <p class="text-xs text-gray-500 mt-1 leading-5">
+                            Konsultasikan kebutuhan furniture
+                            langsung melalui WhatsApp.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Back button -->
+
+                <div class="text-center mt-8">
+
+                    <a
+                        href="/"
+                        class="inline-flex items-center gap-2 text-sm font-semibold text-amber-800 hover:text-amber-950 transition"
+                    >
+
+                        ← Lihat Produk Lainnya
+
+                    </a>
+
+                </div>
+
+            `;
+
+        }
+
+
+        // ==========================================
+        // START
+        // ==========================================
+
+        loadDetail();
+
+    </script>
+
+</body>
+</html>

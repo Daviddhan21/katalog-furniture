@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Katalog Digital - RS Furniture 2026</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(146, 64, 14, 0.08),
+                    transparent 35%
+                ),
+                #f5f5f4;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f4;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #a16207;
+            border-radius: 999px;
+        }
+
+        /* Chat */
+        #chatWindow {
+            transition:
+                opacity 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        #chatWindow.chat-open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        #chatWindow.chat-closed {
+            opacity: 0;
+            transform: translateY(15px) scale(0.97);
+            pointer-events: none;
+        }
+
+        /* Product card */
+        .product-card {
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 18px 35px rgba(0, 0, 0, 0.09);
+        }
+
+        .product-image {
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background:
+                linear-gradient(
+                    90deg,
+                    #e5e7eb 25%,
+                    #f3f4f6 50%,
+                    #e5e7eb 75%
+                );
+
+            background-size: 200% 100%;
+
+            animation: skeleton-loading 1.4s infinite;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Chat bubble */
+        .chat-message {
+            animation: message-in 0.2s ease-out;
+        }
+
+        @keyframes message-in {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Typing dots */
+        .typing-dot {
+            animation: typing 1.2s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.25;
+                transform: translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+    </style>
+</head>
+
+
+<body class="font-sans text-gray-800 min-h-screen">
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="
+    bg-amber-950
+    text-white
+    shadow-lg
+    sticky
+    top-0
+    z-40
+">
+
+    <div class="
+        max-w-7xl
+        mx-auto
+        px-4
+        sm:px-6
+        py-4
+        flex
+        justify-between
+        items-center
+        gap-4
+    ">
+
+        <!-- BRAND -->
+
+        <a href="/" class="group">
+
+            <div class="flex items-center gap-3">
+
+                <div class="
+                    w-10
+                    h-10
+                    rounded-xl
+                    bg-amber-800
+                    border
+                    border-amber-700
+                    flex
+                    items-center
+                    justify-center
+                    group-hover:bg-amber-700
+                    transition
+                ">
+
+                    <svg
+                        class="w-5 h-5 text-amber-200"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="1.8"
+                            d="M3 10.5L12 4l9 6.5M5 9.5V20h14V9.5M9 20v-6h6v6"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+                    <h1 class="
+                        text-xl
+                        sm:text-2xl
+                        font-bold
+                        tracking-wide
+                    ">
+                        RS FURNITURE
+                    </h1>
+
+                    <p class="
+                        text-[10px]
+                        sm:text-xs
+                        text-amber-300
+                    ">
+                        Katalog Digital · Edisi 2026
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <!-- RIGHT -->
+
+        <div class="flex items-center gap-2 sm:gap-3">
+
+            <div class="
+                hidden
+                sm:flex
+                items-center
+                gap-2
+                text-xs
+                text-amber-200
+            ">
+
+                <span class="
+                    w-2
+                    h-2
+                    rounded-full
+                    bg-green-400
+                    animate-pulse
+                "></span>
+
+                KATALOG ONLINE
+
+            </div>
+
+
+            <a
+                href="/admin.html"
+                class="
+                    bg-amber-700
+                    hover:bg-amber-600
+                    text-white
+                    px-3
+                    py-2
+                    rounded-lg
+                    transition
+                    text-xs
+                    font-semibold
+                    shadow
+                "
+            >
+                Panel Admin
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="
+    bg-gradient-to-br
+    from-amber-950
+    via-amber-900
+    to-stone-900
+    text-white
+">
+
+    <div class="
+        max-w-7xl
+        mx-auto
+        px-4
+        sm:px-6
+        py-12
+        sm:py-16
+    ">
+
+        <div class="
+            max-w-3xl
+        ">
+
+            <span class="
+                inline-flex
+                items-center
+                gap-2
+                bg-white/10
+                border
+                border-white/10
+                px-3
+                py-1.5
+                rounded-full
+                text-xs
+                text-amber-200
+                mb-5
+            ">
+
+                <span class="
+                    w-1.5
+                    h-1.5
+                    bg-amber-300
+                    rounded-full
+                "></span>
+
+                KOLEKSI FURNITURE 2026
+
+            </span>
+
+
+            <h2 class="
+                text-3xl
+                sm:text-5xl
+                font-bold
+                leading-tight
+            ">
+
+                Temukan Furniture
+                <span class="text-amber-300">
+                    yang Cocok
+                </span>
+                untuk Rumahmu.
+
+            </h2>
+
+
+            <p class="
+                mt-4
+                text-sm
+                sm:text-base
+                text-amber-100/80
+                max-w-2xl
+                leading-relaxed
+            ">
+
+                Jelajahi koleksi furniture pilihan RS Furniture.
+                Gunakan filter berdasarkan ruangan, bahan,
+                dan budget untuk menemukan produk yang sesuai.
+
+            </p>
+
+
+            <div class="
+                mt-7
+                flex
+                flex-wrap
+                gap-3
+            ">
+
+                <a
+                    href="#catalog"
+                    class="
+                        bg-white
+                        text-amber-950
+                        px-5
+                        py-2.5
+                        rounded-lg
+                        font-semibold
+                        text-sm
+                        hover:bg-amber-50
+                        transition
+                        shadow
+                    "
+                >
+                    Lihat Koleksi
+                </a>
+
+
+                <button
+                    onclick="document.getElementById('chatToggleBtn').click()"
+                    class="
+                        border
+                        border-white/20
+                        bg-white/5
+                        px-5
+                        py-2.5
+                        rounded-lg
+                        font-semibold
+                        text-sm
+                        hover:bg-white/10
+                        transition
+                    "
+                >
+                    Tanya AI
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MAIN CATALOG
+====================================================== -->
+
+<main
+    id="catalog"
+    class="
+        max-w-7xl
+        mx-auto
+        px-4
+        sm:px-6
+        py-8
+        pb-32
+    "
+>
+
+    <div class="
+        grid
+        grid-cols-1
+        lg:grid-cols-4
+        gap-6
+    ">
+
+
+        <!-- =================================================
+             FILTER SIDEBAR
+        ================================================== -->
+
+        <aside class="
+            lg:col-span-1
+            lg:sticky
+            lg:top-24
+            h-fit
+        ">
+
+            <div class="
+                bg-white
+                rounded-2xl
+                shadow-sm
+                border
+                border-gray-200
+                overflow-hidden
+            ">
+
+                <div class="
+                    bg-amber-950
+                    text-white
+                    px-5
+                    py-4
+                ">
+
+                    <div class="
+                        flex
+                        items-center
+                        justify-between
+                    ">
+
+                        <div>
+
+                            <h3 class="
+                                font-bold
+                                text-sm
+                            ">
+                                Filter Produk
+                            </h3>
+
+                            <p class="
+                                text-[10px]
+                                text-amber-300
+                                mt-0.5
+                            ">
+                                Sesuaikan dengan kebutuhan
+                            </p>
+
+                        </div>
+
+
+                        <span class="
+                            text-amber-300
+                            text-lg
+                        ">
+                            ⚙
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="p-5">
+
+                    <!-- SEARCH -->
+
+                    <div class="mb-5">
+
+                        <label class="
+                            block
+                            text-[11px]
+                            font-bold
+                            uppercase
+                            tracking-wide
+                            text-gray-500
+                            mb-2
+                        ">
+                            Cari Produk / Bahan
+                        </label>
+
+
+                        <div class="relative">
+
+                            <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Contoh: Civic, Leather..."
+                                class="
+                                    w-full
+                                    border
+                                    border-gray-300
+                                    p-2.5
+                                    pl-9
+                                    rounded-lg
+                                    text-sm
+                                    focus:outline-none
+                                    focus:ring-2
+                                    focus:ring-amber-700/20
+                                    focus:border-amber-700
+                                "
+                            >
+
+
+                            <svg
+                                class="
+                                    absolute
+                                    left-3
+                                    top-1/2
+                                    -translate-y-1/2
+                                    w-4
+                                    h-4
+                                    text-gray-400
+                                "
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"
+                                />
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="mb-5">
+
+                        <label class="
+                            block
+                            text-[11px]
+                            font-bold
+                            uppercase
+                            tracking-wide
+                            text-gray-500
+                            mb-2
+                        ">
+                            Kategori Ruangan
+                        </label>
+
+
+                        <select
+                            id="kategoriSelect"
+                            class="
+                                w-full
+                                border
+                                border-gray-300
+                                p-2.5
+                                rounded-lg
+                                text-sm
+                                focus:outline-none
+                                focus:ring-2
+                                focus:ring-amber-700/20
+                                focus:border-amber-700
+                            "
+                        >
+
+                            <option value="Semua">
+                                Semua Kategori
+                            </option>
+
+                            <option value="Ruang Tamu">
+                                Ruang Tamu
+                            </option>
+
+                            <option value="Kamar Tidur">
+                                Kamar Tidur
+                            </option>
+
+                            <option value="Dapur">
+                                Dapur
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- BUDGET -->
+
+                    <div class="mb-5">
+
+                        <div class="
+                            flex
+                            justify-between
+                            items-center
+                            mb-2
+                        ">
+
+                            <label class="
+                                text-[11px]
+                                font-bold
+                                uppercase
+                                tracking-wide
+                                text-gray-500
+                            ">
+                                Maksimum Budget
+                            </label>
+
+                            <span
+                                id="budgetValue"
+                                class="
+                                    text-sm
+                                    font-bold
+                                    text-amber-800
+                                "
+                            >
+                                Rp 6.000.000
+                            </span>
+
+                        </div>
+
+
+                        <input
+                            type="range"
+                            id="budgetRange"
+                            min="1500000"
+                            max="6000000"
+                            step="250000"
+                            value="6000000"
+                            class="
+                                w-full
+                                accent-amber-800
+                            "
+                        />
+
+
+                        <div class="
+                            flex
+                            justify-between
+                            text-[9px]
+                            text-gray-400
+                            mt-1
+                        ">
+
+                            <span>
+                                Rp 1,5 Jt
+                            </span>
+
+                            <span>
+                                Rp 6 Jt
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SORT -->
+
+                    <div class="mb-5">
+
+                        <label class="
+                            block
+                            text-[11px]
+                            font-bold
+                            uppercase
+                            tracking-wide
+                            text-gray-500
+                            mb-2
+                        ">
+                            Urutkan
+                        </label>
+
+
+                        <select
+                            id="sortSelect"
+                            class="
+                                w-full
+                                border
+                                border-gray-300
+                                p-2.5
+                                rounded-lg
+                                text-sm
+                                focus:outline-none
+                                focus:ring-2
+                                focus:ring-amber-700/20
+                            "
+                        >
+
+                            <option value="default">
+                                Default
+                            </option>
+
+                            <option value="low">
+                                Harga Terendah
+                            </option>
+
+                            <option value="high">
+                                Harga Tertinggi
+                            </option>
+
+                            <option value="name">
+                                Nama A-Z
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- BUTTON -->
+
+                    <button
+                        onclick="loadProducts()"
+                        class="
+                            w-full
+                            bg-amber-800
+                            hover:bg-amber-900
+                            text-white
+                            py-3
+                            rounded-lg
+                            font-semibold
+                            text-sm
+                            transition
+                            shadow-sm
+                            hover:shadow
+                        "
+                    >
+
+                        Terapkan Filter
+
+                    </button>
+
+
+                    <button
+                        onclick="resetFilters()"
+                        class="
+                            w-full
+                            mt-2
+                            text-gray-500
+                            hover:text-amber-800
+                            py-2
+                            rounded-lg
+                            text-xs
+                            transition
+                        "
+                    >
+
+                        Reset Filter
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             PRODUCT AREA
+        ================================================== -->
+
+        <section class="lg:col-span-3">
+
+
+            <!-- HEADER -->
+
+            <div class="
+                flex
+                flex-col
+                sm:flex-row
+                sm:items-end
+                justify-between
+                gap-3
+                mb-5
+            ">
+
+                <div>
+
+                    <p class="
+                        text-xs
+                        text-amber-800
+                        font-semibold
+                        uppercase
+                        tracking-wide
+                    ">
+                        Koleksi Kami
+                    </p>
+
+                    <h2 class="
+                        text-2xl
+                        font-bold
+                        text-gray-900
+                        mt-1
+                    ">
+                        Produk Furniture
+                    </h2>
+
+                </div>
+
+
+                <div
+                    id="productCount"
+                    class="
+                        text-xs
+                        text-gray-500
+                        bg-white
+                        border
+                        border-gray-200
+                        px-3
+                        py-2
+                        rounded-lg
+                    "
+                >
+                    Memuat produk...
+                </div>
+
+            </div>
+
+
+
+            <!-- PRODUCT GRID -->
+
+            <div
+                id="productGrid"
+                class="
+                    grid
+                    grid-cols-1
+                    sm:grid-cols-2
+                    xl:grid-cols-3
+                    gap-5
+                "
+            ></div>
+
+
+
+            <!-- EMPTY -->
+
+            <div
+                id="emptyState"
+                class="
+                    hidden
+                    text-center
+                    py-16
+                    bg-white
+                    rounded-2xl
+                    border
+                    border-gray-200
+                "
+            >
+
+                <div class="
+                    w-16
+                    h-16
+                    mx-auto
+                    rounded-full
+                    bg-amber-50
+                    flex
+                    items-center
+                    justify-center
+                    text-2xl
+                    mb-4
+                ">
+                    🪑
+                </div>
+
+
+                <h3 class="
+                    font-bold
+                    text-gray-800
+                ">
+                    Produk tidak ditemukan
+                </h3>
+
+
+                <p class="
+                    text-sm
+                    text-gray-500
+                    mt-1
+                ">
+                    Coba ubah kata pencarian,
+                    kategori, atau budget.
+                </p>
+
+
+                <button
+                    onclick="resetFilters()"
+                    class="
+                        mt-5
+                        text-sm
+                        text-amber-800
+                        font-semibold
+                        hover:underline
+                    "
+                >
+                    Reset Filter
+                </button>
+
+            </div>
+
+
+
+            <!-- ERROR -->
+
+            <div
+                id="productError"
+                class="
+                    hidden
+                    bg-red-50
+                    border
+                    border-red-200
+                    text-red-700
+                    rounded-xl
+                    p-5
+                    text-sm
+                "
+            ></div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     CHATBOT
+====================================================== -->
+
+<div class="
+    fixed
+    bottom-5
+    right-5
+    z-50
+">
+
+
+    <!-- CHAT WINDOW -->
+
+    <div
+        id="chatWindow"
+        class="
+            chat-closed
+            absolute
+            bottom-16
+            right-0
+            w-[calc(100vw-32px)]
+            sm:w-96
+            max-w-96
+            bg-white
+            rounded-2xl
+            shadow-2xl
+            border
+            border-gray-200
+            overflow-hidden
+            flex
+            flex-col
+            h-[500px]
+        "
+    >
+
+
+        <!-- CHAT HEADER -->
+
+        <div class="
+            bg-amber-950
+            text-white
+            p-4
+        ">
+
+            <div class="
+                flex
+                justify-between
+                items-center
+            ">
+
+                <div class="
+                    flex
+                    items-center
+                    gap-3
+                ">
+
+                    <div class="
+                        w-9
+                        h-9
+                        rounded-full
+                        bg-amber-800
+                        flex
+                        items-center
+                        justify-center
+                    ">
+
+                        🤖
+
+                    </div>
+
+
+                    <div>
+
+                        <h3 class="
+                            font-bold
+                            text-sm
+                        ">
+                            Asisten AI
+                        </h3>
+
+                        <div class="
+                            flex
+                            items-center
+                            gap-1.5
+                            mt-0.5
+                        ">
+
+                            <span class="
+                                w-1.5
+                                h-1.5
+                                bg-green-400
+                                rounded-full
+                                animate-pulse
+                            "></span>
+
+                            <p class="
+                                text-[10px]
+                                text-amber-300
+                            ">
+                                Powered by Groq
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    onclick="toggleChat()"
+                    class="
+                        text-amber-300
+                        hover:text-white
+                        transition
+                        text-xl
+                    "
+                >
+                    &times;
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CHAT BODY -->
+
+        <div
+            id="chatMessages"
+            class="
+                flex-grow
+                p-4
+                overflow-y-auto
+                space-y-3
+                bg-stone-50
+                text-xs
+            "
+        >
+
+            <div class="
+                bg-amber-100
+                text-amber-950
+                p-3
+                rounded-xl
+                max-w-[88%]
+                border
+                border-amber-200
+                chat-message
+            ">
+
+                <div class="
+                    font-semibold
+                    mb-1
+                ">
+                    Halo! 👋
+                </div>
+
+                Saya asisten AI RS Furniture.
+                Saya bisa membantu mencari produk,
+                mengecek budget, bahan, dan informasi garansi.
+
+                <div class="
+                    mt-3
+                    text-[10px]
+                    text-gray-500
+                ">
+                    Coba salah satu pertanyaan cepat di bawah.
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QUICK QUESTIONS -->
+
+        <div class="
+            p-2.5
+            bg-gray-100
+            border-t
+            flex
+            flex-wrap
+            gap-1.5
+        ">
+
+            <button
+                onclick="sendQuickMessage('Berapa lama garansi produk?')"
+                class="
+                    bg-white
+                    border
+                    border-gray-200
+                    text-amber-900
+                    px-2.5
+                    py-1.5
+                    rounded-lg
+                    hover:bg-amber-50
+                    text-[10px]
+                    transition
+                "
+            >
+                Garansi?
+            </button>
+
+
+            <button
+                onclick="sendQuickMessage('Apakah bisa custom warna?')"
+                class="
+                    bg-white
+                    border
+                    border-gray-200
+                    text-amber-900
+                    px-2.5
+                    py-1.5
+                    rounded-lg
+                    hover:bg-amber-50
+                    text-[10px]
+                    transition
+                "
+            >
+                Custom Warna?
+            </button>
+
+
+            <button
+                onclick="sendQuickMessage('Rekomendasi sofa di bawah 2 juta')"
+                class="
+                    bg-white
+                    border
+                    border-gray-200
+                    text-amber-900
+                    px-2.5
+                    py-1.5
+                    rounded-lg
+                    hover:bg-amber-50
+                    text-[10px]
+                    transition
+                "
+            >
+                Budget < 2 Juta?
+            </button>
+
+        </div>
+
+
+
+        <!-- INPUT -->
+
+        <form
+            id="chatForm"
+            class="
+                p-3
+                bg-white
+                border-t
+                flex
+                gap-2
+            "
+        >
+
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Tanya AI tentang produk..."
+                autocomplete="off"
+                class="
+                    flex-grow
+                    min-w-0
+                    border
+                    border-gray-300
+                    rounded-lg
+                    px-3
+                    py-2
+                    text-xs
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-amber-700/20
+                    focus:border-amber-700
+                "
+            >
+
+
+            <button
+                type="submit"
+                class="
+                    bg-amber-800
+                    text-white
+                    px-4
+                    rounded-lg
+                    hover:bg-amber-900
+                    transition
+                    text-xs
+                    font-semibold
+                "
+            >
+                Kirim
+            </button>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- FLOATING BUTTON -->
+
+    <button
+        id="chatToggleBtn"
+        onclick="toggleChat()"
+        class="
+            w-14
+            h-14
+            bg-amber-800
+            hover:bg-amber-900
+            text-white
+            rounded-full
+            shadow-xl
+            flex
+            items-center
+            justify-center
+            transition
+            hover:scale-105
+        "
+        aria-label="Buka chatbot"
+    >
+
+        <svg
+            id="chatIcon"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            />
+
+        </svg>
+
+
+        <svg
+            id="closeIcon"
+            class="w-6 h-6 hidden"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+            />
+
+        </svg>
+
+    </button>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   ELEMENTS
+====================================================== */
+
+const budgetRange =
+    document.getElementById("budgetRange");
+
+const budgetValue =
+    document.getElementById("budgetValue");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const kategoriSelect =
+    document.getElementById("kategoriSelect");
+
+const sortSelect =
+    document.getElementById("sortSelect");
+
+const productGrid =
+    document.getElementById("productGrid");
+
+const emptyState =
+    document.getElementById("emptyState");
+
+const productError =
+    document.getElementById("productError");
+
+const productCount =
+    document.getElementById("productCount");
+
+
+/* =====================================================
+   BUDGET
+====================================================== */
+
+budgetRange.addEventListener(
+    "input",
+    function(event) {
+
+        budgetValue.textContent =
+            formatRupiah(
+                event.target.value
+            );
+
+    }
+);
+
+
+/* =====================================================
+   FORMAT RUPIAH
+====================================================== */
+
+function formatRupiah(value) {
+
+    return "Rp " +
+        Number(value)
+            .toLocaleString("id-ID");
+
+}
+
+
+/* =====================================================
+   LOAD PRODUCTS
+====================================================== */
+
+async function loadProducts() {
+
+    showProductLoading();
+
+    hideProductError();
+
+
+    const search =
+        searchInput.value.trim();
+
+    const kategori =
+        kategoriSelect.value;
+
+    const maxBudget =
+        budgetRange.value;
+
+
+    const query =
+        new URLSearchParams({
+            search,
+            kategori,
+            max_budget: maxBudget
+        });
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/produk?${query.toString()}`
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        let data =
+            await response.json();
+
+
+        if (!Array.isArray(data)) {
+
+            throw new Error(
+                "Format data produk tidak valid."
+            );
+
+        }
+
+
+        /*
+         * SORT CLIENT-SIDE
+         */
+
+        data =
+            sortProducts(
+                data,
+                sortSelect.value
+            );
+
+
+        renderProducts(data);
+
+
+    } catch (error) {
+
+        console.error(
+            "Product error:",
+            error
+        );
+
+
+        productGrid.innerHTML = "";
+
+
+        emptyState.classList.add(
+            "hidden"
+        );
+
+
+        productError.textContent =
+            "Gagal memuat katalog produk. " +
+            "Pastikan server dan API produk sedang berjalan.";
+
+
+        productError.classList.remove(
+            "hidden"
+        );
+
+
+        productCount.textContent =
+            "Koneksi gagal";
+
+    }
+
+}
+
+
+/* =====================================================
+   SORT
+====================================================== */
+
+function sortProducts(
+    data,
+    type
+) {
+
+    const products =
+        [...data];
+
+
+    if (type === "low") {
+
+        products.sort(
+            (a, b) =>
+                Number(a.harga) -
+                Number(b.harga)
+        );
+
+    }
+
+
+    if (type === "high") {
+
+        products.sort(
+            (a, b) =>
+                Number(b.harga) -
+                Number(a.harga)
+        );
+
+    }
+
+
+    if (type === "name") {
+
+        products.sort(
+            (a, b) =>
+                String(a.nama)
+                    .localeCompare(
+                        String(b.nama),
+                        "id"
+                    )
+        );
+
+    }
+
+
+    return products;
+
+}
+
+
+/* =====================================================
+   RENDER PRODUCTS
+====================================================== */
+
+function renderProducts(data) {
+
+    productGrid.innerHTML = "";
+
+
+    productCount.textContent =
+        `${data.length} produk ditemukan`;
+
+
+    if (data.length === 0) {
+
+        emptyState.classList.remove(
+            "hidden"
+        );
+
+        return;
+
+    }
+
+
+    emptyState.classList.add(
+        "hidden"
+    );
+
+
+    data.forEach(
+        (item) => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "product-card bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col border border-gray-200";
+
+
+            const imageUrl =
+                item.foto_url ||
+                "https://placehold.co/600x400/e7e5e4/78350f?text=RS+Furniture";
+
+
+            card.innerHTML = `
+
+                <div class="
+                    relative
+                    overflow-hidden
+                    bg-gray-100
+                ">
+
+                    <img
+                        src="${escapeHtml(imageUrl)}"
+                        alt="${escapeHtml(item.nama || "Produk")}"
+                        class="
+                            product-image
+                            w-full
+                            h-52
+                            object-cover
+                        "
+                        loading="lazy"
+                        onerror="
+                            this.src='https://placehold.co/600x400/e7e5e4/78350f?text=RS+Furniture'
+                        "
+                    >
+
+
+                    <div class="
+                        absolute
+                        top-3
+                        left-3
+                        flex
+                        gap-2
+                    ">
+
+                        <span class="
+                            text-[10px]
+                            font-bold
+                            px-2.5
+                            py-1
+                            bg-white/95
+                            text-amber-900
+                            rounded-full
+                            shadow-sm
+                        ">
+                            ${escapeHtml(item.kategori || "Furniture")}
+                        </span>
+
+                    </div>
+
+
+                    <div class="
+                        absolute
+                        top-3
+                        right-3
+                    ">
+
+                        <span class="
+                            text-[10px]
+                            bg-green-600
+                            text-white
+                            font-semibold
+                            px-2.5
+                            py-1
+                            rounded-full
+                            shadow-sm
+                        ">
+                            Garansi 1 Thn
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="
+                    p-5
+                    flex-grow
+                    flex
+                    flex-col
+                ">
+
+                    <div class="flex-grow">
+
+                        <h3 class="
+                            font-bold
+                            text-gray-900
+                            text-lg
+                            leading-tight
+                        ">
+                            ${escapeHtml(item.nama || "Produk Furniture")}
+                        </h3>
+
+
+                        <div class="
+                            flex
+                            items-center
+                            gap-2
+                            mt-2
+                            text-xs
+                            text-gray-500
+                        ">
+
+                            <span>
+                                Bahan:
+                            </span>
+
+                            <span class="
+                                font-semibold
+                                text-gray-700
+                            ">
+                                ${escapeHtml(item.bahan || "-")}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="
+                        mt-5
+                        pt-4
+                        border-t
+                        border-gray-100
+                    ">
+
+                        <div class="
+                            flex
+                            justify-between
+                            items-end
+                            gap-3
+                        ">
+
+                            <div>
+
+                                <p class="
+                                    text-[10px]
+                                    uppercase
+                                    text-gray-400
+                                    font-semibold
+                                ">
+                                    Harga
+                                </p>
+
+                                <p class="
+                                    text-amber-900
+                                    font-bold
+                                    text-lg
+                                ">
+                                    ${formatRupiah(item.harga)}
+                                </p>
+
+                            </div>
+
+
+                            <a
+                                href="/detail.html?id=${encodeURIComponent(item.id)}"
+                                class="
+                                    bg-amber-800
+                                    hover:bg-amber-900
+                                    text-white
+                                    px-4
+                                    py-2
+                                    rounded-lg
+                                    text-xs
+                                    font-semibold
+                                    transition
+                                "
+                            >
+                                Detail
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            productGrid.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LOADING SKELETON
+====================================================== */
+
+function showProductLoading() {
+
+    productGrid.innerHTML =
+        Array.from(
+            { length: 6 }
+        )
+        .map(
+            () => `
+
+                <div class="
+                    bg-white
+                    rounded-2xl
+                    border
+                    border-gray-200
+                    overflow-hidden
+                ">
+
+                    <div class="
+                        skeleton
+                        h-52
+                    "></div>
+
+                    <div class="p-5">
+
+                        <div class="
+                            skeleton
+                            h-5
+                            w-3/4
+                            rounded
+                        "></div>
+
+                        <div class="
+                            skeleton
+                            h-3
+                            w-1/2
+                            rounded
+                            mt-3
+                        "></div>
+
+                        <div class="
+                            skeleton
+                            h-5
+                            w-1/3
+                            rounded
+                            mt-8
+                        "></div>
+
+                    </div>
+
+                </div>
+
+            `
+        )
+        .join("");
+
+
+    productCount.textContent =
+        "Memuat produk...";
+
+}
+
+
+/* =====================================================
+   RESET FILTER
+====================================================== */
+
+function resetFilters() {
+
+    searchInput.value =
+        "";
+
+    kategoriSelect.value =
+        "Semua";
+
+    budgetRange.value =
+        "6000000";
+
+    budgetValue.textContent =
+        "Rp 6.000.000";
+
+    sortSelect.value =
+        "default";
+
+
+    loadProducts();
+
+}
+
+
+/* =====================================================
+   SEARCH REALTIME
+====================================================== */
+
+let searchTimeout;
+
+
+searchInput.addEventListener(
+    "input",
+    function() {
+
+        clearTimeout(
+            searchTimeout
+        );
+
+
+        searchTimeout =
+            setTimeout(
+                () => {
+
+                    loadProducts();
+
+                },
+                450
+            );
+
+    }
+);
+
+
+kategoriSelect.addEventListener(
+    "change",
+    loadProducts
+);
+
+
+sortSelect.addEventListener(
+    "change",
+    loadProducts
+);
+
+
+/* =====================================================
+   ERROR
+====================================================== */
+
+function hideProductError() {
+
+    productError.classList.add(
+        "hidden"
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+====================================================== */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   CHAT
+====================================================== */
+
+let chatOpen = false;
+
+
+function toggleChat() {
+
+    const chatWin =
+        document.getElementById(
+            "chatWindow"
+        );
+
+    const chatIcon =
+        document.getElementById(
+            "chatIcon"
+        );
+
+    const closeIcon =
+        document.getElementById(
+            "closeIcon"
+        );
+
+
+    chatOpen =
+        !chatOpen;
+
+
+    if (chatOpen) {
+
+        chatWin.classList.remove(
+            "chat-closed"
+        );
+
+        chatWin.classList.add(
+            "chat-open"
+        );
+
+        chatIcon.classList.add(
+            "hidden"
+        );
+
+        closeIcon.classList.remove(
+            "hidden"
+        );
+
+
+        setTimeout(
+            () => {
+
+                document
+                    .getElementById(
+                        "chatInput"
+                    )
+                    .focus();
+
+            },
+            250
+        );
+
+
+    } else {
+
+        chatWin.classList.remove(
+            "chat-open"
+        );
+
+        chatWin.classList.add(
+            "chat-closed"
+        );
+
+        chatIcon.classList.remove(
+            "hidden"
+        );
+
+        closeIcon.classList.add(
+            "hidden"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   APPEND CHAT
+====================================================== */
+
+function appendMessage(
+    text,
+    sender
+) {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    const msgDiv =
+        document.createElement(
+            "div"
+        );
+
+
+    msgDiv.className =
+        "chat-message p-3 rounded-xl max-w-[88%]";
+
+
+    if (sender === "user") {
+
+        msgDiv.classList.add(
+            "bg-amber-800",
+            "text-white",
+            "ml-auto"
+        );
+
+    } else {
+
+        msgDiv.classList.add(
+            "bg-amber-100",
+            "text-amber-950",
+            "border",
+            "border-amber-200"
+        );
+
+    }
+
+
+    /*
+     * Jangan langsung pakai innerHTML
+     * untuk response AI.
+     */
+
+    msgDiv.textContent =
+        text;
+
+
+    container.appendChild(
+        msgDiv
+    );
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* =====================================================
+   TYPING INDICATOR
+====================================================== */
+
+function showTyping() {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    const typing =
+        document.createElement(
+            "div"
+        );
+
+
+    typing.id =
+        "typingIndicator";
+
+
+    typing.className =
+        "bg-amber-50 text-gray-500 p-3 rounded-xl max-w-[70px] border border-amber-100 flex gap-1";
+
+
+    typing.innerHTML = `
+
+        <span class="
+            typing-dot
+            w-1.5
+            h-1.5
+            bg-gray-400
+            rounded-full
+        "></span>
+
+        <span class="
+            typing-dot
+            w-1.5
+            h-1.5
+            bg-gray-400
+            rounded-full
+        "></span>
+
+        <span class="
+            typing-dot
+            w-1.5
+            h-1.5
+            bg-gray-400
+            rounded-full
+        "></span>
+
+    `;
+
+
+    container.appendChild(
+        typing
+    );
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* =====================================================
+   REMOVE TYPING
+====================================================== */
+
+function removeTyping() {
+
+    document
+        .getElementById(
+            "typingIndicator"
+        )
+        ?.remove();
+
+}
+
+
+/* =====================================================
+   CHAT PROCESS
+====================================================== */
+
+async function processChatMessage(
+    userMessage
+) {
+
+    appendMessage(
+        userMessage,
+        "user"
+    );
+
+
+    showTyping();
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/chat",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            message:
+                                userMessage
+                        })
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        removeTyping();
+
+
+        appendMessage(
+            data.reply ||
+            "Maaf, AI tidak memberikan jawaban.",
+            "bot"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Chat error:",
+            error
+        );
+
+
+        removeTyping();
+
+
+        appendMessage(
+            "Maaf, terjadi kesalahan saat menghubungi server AI.",
+            "bot"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CHAT FORM
+====================================================== */
+
+document
+    .getElementById("chatForm")
+    .addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const input =
+                document.getElementById(
+                    "chatInput"
+                );
+
+
+            const message =
+                input.value.trim();
+
+
+            if (!message) {
+                return;
+            }
+
+
+            input.value =
+                "";
+
+
+            processChatMessage(
+                message
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   QUICK MESSAGE
+====================================================== */
+
+function sendQuickMessage(
+    text
+) {
+
+    processChatMessage(
+        text
+    );
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+====================================================== */
+
+loadProducts();
+
+</script>
+
+</body>
+</html>

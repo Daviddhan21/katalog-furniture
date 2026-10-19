@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - RS Furniture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <nav class="bg-gray-900 text-white py-4 px-6 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Admin Panel - RS Furniture</h1>
+        <a href="/" class="text-xs bg-gray-700 px-3 py-1.5 rounded hover:bg-gray-600">Lihat Catalog Publik</a>
+    </nav>
+
+    <div class="max-w-6xl mx-auto my-8 p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Form Tambah -->
+        <div class="bg-white p-6 rounded-lg shadow-sm md:col-span-1 h-fit border">
+            <h2 class="text-lg font-bold mb-4 text-gray-800">Tambah Produk Baru</h2>
+            <form id="addProductForm" class="space-y-3 text-sm">
+                <div>
+                    <label class="block font-medium">Nama Produk</label>
+                    <input type="text" name="nama" required class="w-full border p-2 rounded mt-1">
+                </div>
+                <div>
+                    <label class="block font-medium">Kategori</label>
+                    <select name="kategori" required class="w-full border p-2 rounded mt-1">
+                        <option value="Ruang Tamu">Ruang Tamu</option>
+                        <option value="Kamar Tidur">Kamar Tidur</option>
+                        <option value="Dapur">Dapur</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-medium">Bahan / Material</label>
+                    <input type="text" name="bahan" required class="w-full border p-2 rounded mt-1">
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-xs">P (cm)</label>
+                        <input type="number" name="panjang" class="w-full border p-1 rounded mt-1">
+                    </div>
+                    <div>
+                        <label class="block text-xs">L (cm)</label>
+                        <input type="number" name="lebar" class="w-full border p-1 rounded mt-1">
+                    </div>
+                    <div>
+                        <label class="block text-xs">T (cm)</label>
+                        <input type="number" name="tinggi" class="w-full border p-1 rounded mt-1">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-medium">Harga (Rp)</label>
+                    <input type="number" name="harga" required class="w-full border p-2 rounded mt-1">
+                </div>
+                <div>
+                    <label class="block font-medium">Foto Produk</label>
+                    <input type="file" name="foto" accept="image/*" class="w-full border p-1 rounded mt-1">
+                </div>
+                <div>
+                    <label class="block font-medium">Deskripsi</label>
+                    <textarea name="deskripsi" rows="2" class="w-full border p-2 rounded mt-1"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-amber-800 text-white font-bold py-2 rounded hover:bg-amber-900 transition">Simpan Produk</button>
+            </form>
+        </div>
+
+        <!-- Tabel Produk -->
+        <div class="bg-white p-6 rounded-lg shadow-sm md:col-span-2 overflow-x-auto border">
+            <h2 class="text-lg font-bold mb-4 text-gray-800">Daftar Produk RS Furniture</h2>
+            <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 border-b">
+                        <th class="p-2">Foto</th>
+                        <th class="p-2">Nama</th>
+                        <th class="p-2">Kategori</th>
+                        <th class="p-2">Harga</th>
+                        <th class="p-2 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function loadAdminProducts() {
+            const res = await fetch('/api/produk');
+            const data = await res.json();
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach(item => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-2"><img src="${item.foto_url}" class="w-10 h-10 object-cover rounded"></td>
+                        <td class="p-2 font-medium">${item.nama}</td>
+                        <td class="p-2">${item.kategori}</td>
+                        <td class="p-2">Rp ${Number(item.harga).toLocaleString('id-ID')}</td>
+                        <td class="p-2 text-center">
+                            <button onclick="deleteProduct(${item.id})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        document.getElementById('addProductForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            const res = await fetch('/api/produk', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (res.ok) {
+                e.target.reset();
+                loadAdminProducts();
+            }
+        });
+
+        async function deleteProduct(id) {
+            if (confirm('Yakin ingin menghapus produk ini?')) {
+                await fetch(`/api/produk/${id}`, { method: 'DELETE' });
+                loadAdminProducts();
+            }
+        }
+
+        loadAdminProducts();
+    </script>
+</body>
+</html>
